@@ -15,7 +15,7 @@ build:
 
 requirements:
 
-  build:
+  host:
     - python
     - setuptools
 
@@ -32,7 +32,10 @@ test:
 about:
   home: https://github.com/spyder-ide/qtpy
   license: MIT
-  summary: A uniform layer to support PyQt5, PyQt4 and PySide with a single codebase
+  summary: Abtraction layer for PyQt5/PyQt4/PySide
+  description: |
+    QtPy is a small abstraction layer that lets you write applications using a
+    single api call to either PyQt or PySide.
 
 extra:
   recipe-maintainers:
