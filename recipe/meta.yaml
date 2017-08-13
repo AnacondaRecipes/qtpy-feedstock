@@ -34,10 +34,14 @@ test:
 about:
   home: https://github.com/spyder-ide/qtpy
   license: MIT
+  license_file: LICENSE.txt
   summary: Abtraction layer for PyQt5/PyQt4/PySide
   description: |
     QtPy is a small abstraction layer that lets you write applications using a
     single api call to either PyQt or PySide.
+  doc_url: https://pypi.python.org/pypi/QtPy
+  dev_url: https://github.com/spyder-ide/qtpy
+  doc_source_url: https://github.com/spyder-ide/qtpy/blob/master/README.md
 
 extra:
   recipe-maintainers:
