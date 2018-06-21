@@ -28,8 +28,9 @@ test:
   requires:
     - pyqt
   imports:
-    - qtpy
-    - qtpy.QtGui
+  script:
+    - QT_API=pyqt5 qtpy
+    - QT_APU=pyqt5 qtpy.QtGui
 
 about:
   home: https://github.com/spyder-ide/qtpy
