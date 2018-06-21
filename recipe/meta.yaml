@@ -10,7 +10,7 @@ source:
   sha256: 1d1a4343540433a203280f162d43226e4c87489155fe4a9a6f1923ba11362bf9
 
 build:
-  number: 0
+  number: 1
   script: python setup.py install --single-version-externally-managed --record record.txt
 
 requirements:
@@ -26,8 +26,9 @@ test:
   requires:
     - pyqt
   imports:
-    - qtpy
-    - qtpy.QtGui
+  script:
+    - QT_API=pyqt5 qtpy
+    - QT_APU=pyqt5 qtpy.QtGui
 
 about:
   home: https://github.com/spyder-ide/qtpy
