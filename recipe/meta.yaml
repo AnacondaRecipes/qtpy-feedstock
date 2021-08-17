@@ -28,10 +28,13 @@ requirements:
 test:
   requires:
     - pyqt
+    - pip
   imports:
   script:
     - QT_API=pyqt5 qtpy
     - QT_API=pyqt5 qtpy.QtGui
+  commands:
+    - pip check
 
 about:
   home: https://github.com/spyder-ide/qtpy
