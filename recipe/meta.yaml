@@ -21,6 +21,7 @@ requirements:
     - pip
     - python
     - setuptools
+    - wheel
 
   run:
     - python
@@ -39,6 +40,7 @@ test:
 about:
   home: https://github.com/spyder-ide/qtpy
   license: MIT
+  license_family: MIT
   license_file: LICENSE.txt
   summary: Abtraction layer for PyQt5/PyQt4/PySide
   description: |
