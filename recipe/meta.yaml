@@ -1,4 +1,4 @@
-{% set version = "1.9.0" %}
+{% set version = "1.10.0" %}
 
 package:
   name: qtpy
@@ -7,7 +7,7 @@ package:
 source:
   fn: qtpy-{{version}}.tar.gz
   url: https://pypi.io/packages/source/q/qtpy/QtPy-{{version}}.tar.gz
-  sha256: 2db72c44b55d0fe1407be8fba35c838ad0d6d3bb81f23007886dc1fc0f459c8d
+  sha256: 3d20f010caa3b2c04835d6a2f66f8873b041bdaf7a76085c2a0d7890cdd65ea9
 
 build:
   noarch: python
@@ -21,6 +21,7 @@ requirements:
     - pip
     - python
     - setuptools
+    - wheel
 
   run:
     - python
@@ -28,14 +29,18 @@ requirements:
 test:
   requires:
     - pyqt
+    - pip
   imports:
   script:
     - QT_API=pyqt5 qtpy
     - QT_API=pyqt5 qtpy.QtGui
+  commands:
+    - pip check
 
 about:
   home: https://github.com/spyder-ide/qtpy
   license: MIT
+  license_family: MIT
   license_file: LICENSE.txt
   summary: Abtraction layer for PyQt5/PyQt4/PySide
   description: |
