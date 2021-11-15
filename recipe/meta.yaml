@@ -12,7 +12,8 @@ source:
 build:
   noarch: python
   number: 0
-  skip: True  # [py<36 or ppc64le]
+  # skip s390x due to pyqt missing on s390x
+  skip: True  # [py<36 or ppc64le or s390x]
   script: python -m pip install --no-deps --ignore-installed .
 
 requirements:
