@@ -1,4 +1,4 @@
-{% set version = "1.10.0" %}
+{% set version = "1.11.2" %}
 
 package:
   name: qtpy
@@ -7,12 +7,13 @@ package:
 source:
   fn: qtpy-{{version}}.tar.gz
   url: https://pypi.io/packages/source/q/qtpy/QtPy-{{version}}.tar.gz
-  sha256: 3d20f010caa3b2c04835d6a2f66f8873b041bdaf7a76085c2a0d7890cdd65ea9
+  sha256: d6e4ae3a41f1fcb19762b58f35ad6dd443b4bdc867a4cb81ef10ccd85403c92b
 
 build:
   noarch: python
   number: 0
-  skip: True  # [ppc64le]
+  # skip s390x due to pyqt missing on s390x
+  skip: True  # [py<36 or ppc64le or s390x]
   script: python -m pip install --no-deps --ignore-installed .
 
 requirements:
@@ -24,12 +25,13 @@ requirements:
     - wheel
 
   run:
-    - python
+    - python >=3.6
 
 test:
   requires:
     - pyqt
     - pip
+    - python <3.10
   imports:
   script:
     - QT_API=pyqt5 qtpy
