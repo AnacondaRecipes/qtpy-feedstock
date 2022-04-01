@@ -12,27 +12,27 @@ source:
 build:
   noarch: python
   number: 0
-  # skip s390x due to pyqt missing on s390x
-  skip: True  # [py<36 or ppc64le or s390x]
-  script: python -m pip install --no-deps --ignore-installed .
+  # skip s390x and ppc64le due to pyqt missing on s390x and ppc64le
+  script: python -m pip install --no-deps --ignore-installed . -vv
 
 requirements:
 
   host:
     - pip
     - python
-    - setuptools
+    - setuptools >=42
     - wheel
-
   run:
     - python >=3.6
+    - packaging
 
 test:
   requires:
     - pyqt
     - pip
-    - python <3.10
   imports:
+    - qtpy
+    - qtpy.QtGui
   script:
     - QT_API=pyqt5 qtpy
     - QT_API=pyqt5 qtpy.QtGui
