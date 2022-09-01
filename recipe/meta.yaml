@@ -1,4 +1,4 @@
-{% set version = "2.0.1" %}
+{% set version = "2.2.0" %}
 
 package:
   name: qtpy
@@ -7,13 +7,15 @@ package:
 source:
   fn: qtpy-{{version}}.tar.gz
   url: https://pypi.io/packages/source/q/qtpy/QtPy-{{version}}.tar.gz
-  sha256: adfd073ffbd2de81dc7aaa0b983499ef5c59c96adcfdcc9dea60d42ca885eb8f
+  sha256: d85f1b121f24a41ad26c55c446e66abdb7c528839f8c4f11f156ec4541903914
 
 build:
-  noarch: python
   number: 0
   # skip s390x and ppc64le due to pyqt missing on s390x and ppc64le
+  skip: True  # [py<37 or s390x or ppc64le]
   script: python -m pip install --no-deps --ignore-installed . -vv
+  entry_points:
+    - qtpy = qtpy.__main__:main
 
 requirements:
 
@@ -23,7 +25,7 @@ requirements:
     - setuptools >=42
     - wheel
   run:
-    - python >=3.6
+    - python
     - packaging
 
 test:
@@ -44,6 +46,7 @@ about:
   license: MIT
   license_family: MIT
   license_file: LICENSE.txt
+  license_url: https://github.com/spyder-ide/qtpy/blob/master/LICENSE.txt
   summary: Abtraction layer for PyQt5/PyQt4/PySide
   description: |
     QtPy is a small abstraction layer that lets you write applications using a
