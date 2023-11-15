@@ -1,19 +1,18 @@
-{% set version = "2.2.0" %}
+{% set version = "2.4.1" %}
 
 package:
   name: qtpy
   version: {{version}}
 
 source:
-  fn: qtpy-{{version}}.tar.gz
   url: https://pypi.io/packages/source/q/qtpy/QtPy-{{version}}.tar.gz
-  sha256: d85f1b121f24a41ad26c55c446e66abdb7c528839f8c4f11f156ec4541903914
+  sha256: a5a15ffd519550a1361bdc56ffc07fda56a6af7292f17c7b395d4083af632987
 
 build:
   number: 0
   # skip s390x and ppc64le due to pyqt missing on s390x and ppc64le
   skip: True  # [py<37 or s390x or ppc64le]
-  script: python -m pip install --no-deps --ignore-installed . -vv
+  script: python -m pip install --no-deps --ignore-installed --no-build-isolation . -vv
   entry_points:
     - qtpy = qtpy.__main__:main
 
@@ -46,14 +45,12 @@ about:
   license: MIT
   license_family: MIT
   license_file: LICENSE.txt
-  license_url: https://github.com/spyder-ide/qtpy/blob/master/LICENSE.txt
-  summary: Abtraction layer for PyQt5/PyQt4/PySide
+  summary: Abtraction layer for PyQt5/PyQt6/PySide2/PySide6
   description: |
     QtPy is a small abstraction layer that lets you write applications using a
     single api call to either PyQt or PySide.
-  doc_url: https://pypi.python.org/pypi/QtPy
+  doc_url: https://github.com/spyder-ide/qtpy
   dev_url: https://github.com/spyder-ide/qtpy
-  doc_source_url: https://github.com/spyder-ide/qtpy/blob/master/README.md
 
 extra:
   recipe-maintainers:
