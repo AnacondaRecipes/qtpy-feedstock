@@ -10,8 +10,8 @@ source:
 
 build:
   number: 0
-  # skip s390x and ppc64le due to pyqt missing on s390x and ppc64le
-  skip: True  # [py<37 or s390x or ppc64le]
+  # skip s390x and osx-64 due to missing pyqt/pyside6
+  skip: True  # [py<37 or s390x or (osx and x86_64)]
   script: python -m pip install --no-deps --ignore-installed --no-build-isolation . -vv
   entry_points:
     - qtpy = qtpy.__main__:main
@@ -29,23 +29,45 @@ requirements:
 
 test:
   requires:
-    - pyqt
     - pip
+    - pytest >=6,!=7.0.0,!=7.0.1
+    - pytest-qt
+    - pyqt >=6
   imports:
     - qtpy
+    - qtpy.QtCore
+    - qtpy.QtDBus
+    - qtpy.QtDesigner
     - qtpy.QtGui
-  script:
-    - QT_API=pyqt5 qtpy
-    - QT_API=pyqt5 qtpy.QtGui
+    - qtpy.QtHelp
+    - qtpy.QtNetwork
+    - qtpy.QtOpenGL
+    - qtpy.QtOpenGLWidgets
+    - qtpy.QtPrintSupport
+    - qtpy.QtQml
+    - qtpy.QtQuick
+    - qtpy.QtQuickWidgets
+    - qtpy.QtSql
+    - qtpy.QtSvg
+    - qtpy.QtSvgWidgets
+    - qtpy.QtTest
+    - qtpy.QtWebChannel
+    - qtpy.QtWebSockets
+    - qtpy.QtWidgets
+    - qtpy.QtXml
   commands:
     - pip check
+    - qtpy mypy-args
+    - qtpy --help
+    # Our Qt 6.7.2 release does not provide QtMultimedia support. Skip these tests for now.
+    - pytest --pyargs qtpy -k "not qtmultimedia"
 
 about:
   home: https://github.com/spyder-ide/qtpy
   license: MIT
   license_family: MIT
   license_file: LICENSE.txt
-  summary: Abtraction layer for PyQt5/PyQt6/PySide2/PySide6
+  summary: Abstraction layer for PyQt5/PyQt6/PySide2/PySide6
   description: |
     QtPy is a small abstraction layer that lets you write applications using a
     single api call to either PyQt or PySide.
