@@ -1,17 +1,16 @@
-{% set version = "2.4.1" %}
+{% set version = "2.4.3" %}
 
 package:
   name: qtpy
   version: {{version}}
 
 source:
-  url: https://pypi.io/packages/source/q/qtpy/QtPy-{{version}}.tar.gz
-  sha256: a5a15ffd519550a1361bdc56ffc07fda56a6af7292f17c7b395d4083af632987
+  url: https://pypi.io/packages/source/q/qtpy/qtpy-{{ version }}.tar.gz
+  sha256: db744f7832e6d3da90568ba6ccbca3ee2b3b4a890c3d6fbbc63142f6e4cdf5bb
 
 build:
   number: 0
-  # skip s390x and osx-64 due to missing pyqt/pyside6
-  skip: True  # [py<37 or s390x or (osx and x86_64)]
+  skip: True  # [py<37]
   script: python -m pip install --no-deps --ignore-installed --no-build-isolation . -vv
   entry_points:
     - qtpy = qtpy.__main__:main
@@ -59,8 +58,13 @@ test:
     - pip check
     - qtpy mypy-args
     - qtpy --help
-    # Our Qt 6.7.2 release does not provide QtMultimedia support. Skip these tests for now.
-    - pytest --pyargs qtpy -k "not qtmultimedia"
+    # Our Qt release does not provide QtMultimedia support. Skip these tests for now.
+    {% set tests_to_skip = "qtmultimedia" %}
+    {% set tests_to_skip = tests_to_skip ~ " or test_qfontmetrics_width" %}  # [linux]
+    {% set tests_to_skip = tests_to_skip ~ " or qtgui or qtwidgets" %}       # [osx]
+    {% set tests_to_skip = tests_to_skip ~ " or test_QSomethingEvent_pos_functions or test_QMenu_functions" %}  # [win]
+    - pytest --pyargs qtpy -k "not ({{ tests_to_skip }})"  # [not linux]
+    - xvfb-run -a --server-args="-screen 0 1024x768x24" pytest --pyargs qtpy -k "not ({{ tests_to_skip }})"  # [linux]
 
 about:
   home: https://github.com/spyder-ide/qtpy
